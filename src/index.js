@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+//import Loader from 'react-loader-spinner';
 import Player from "./components/player";
 
 class App extends React.Component {
@@ -102,7 +103,7 @@ class App extends React.Component {
     render(){
         return (
             <div>
-                {!this.state.loaded ? <div>Loading...</div> :
+                {!this.state.loaded ? <div><img src={'Loading.png'}/></div> :
                     <div className={'side-rail-container side-rail-container_style_has-ad'}>
                         <header className={'side-rail__header'}>
                             <h2 className={'side-rail__title'}>2018 Regular Season Leaders</h2>
