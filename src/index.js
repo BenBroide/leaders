@@ -21,35 +21,35 @@ class App extends React.Component {
 
     }
 
-    fetchData = ( cat = 'PTS' ) => {
-        if( this.state[cat].length > 0 ){
+    fetchData = (cat = 'PTS') =>{
+        if(this.state[cat].length > 0) {
             return;
         }
         axios.get(`/wp-json/wnba/v1/stats?cat=${cat}`)
-            .then( (response) => {
+            .then((response) =>{
                 console.log(response);
 
-                if( cat === 'PTS' ){
-                    this.state.playersPts = response.data ;
+                if(cat === 'PTS') {
+                    this.state.playersPts = response.data;
                 }
-                if( cat === 'REB' ){
+                if(cat === 'REB') {
                     //this.state. = response.data ;
-                    this.setState( { playersReb : response.data });
+                    this.setState({playersReb: response.data});
                 }
-                if( cat === 'AST' ){
+                if(cat === 'AST') {
                     //this.state.playersAst = response.data ;
-                    this.setState( { playersAst : response.data });
+                    this.setState({playersAst: response.data});
                 }
-                this.setData( cat );
-                this.setState ( {loaded : true } );
+                this.setData(cat);
+                this.setState({loaded: true});
             })
-            .catch( (error) => {
+            .catch((error) =>{
                 console.log(error);
             });
     }
 
-    setData = (cat ) =>{
-        const jsonKeys = { PTS : 'playersPts', REB : 'playersReb', AST: 'playersAst' };
+    setData = (cat) =>{
+        const jsonKeys = {PTS: 'playersPts', REB: 'playersReb', AST: 'playersAst'};
         this.setPlayersStats(jsonKeys[cat]);
     }
 
@@ -69,10 +69,10 @@ class App extends React.Component {
             playersArray.push(playerObj);
         }
         let cat = statsKey.slice(-3).toUpperCase();
-        if( 'PTS' == cat ){
+        if('PTS' == cat) {
             this.state[cat] = playersArray;
         } else {
-            this.setState({ [cat] : playersArray });
+            this.setState({[cat]: playersArray});
         }
 
     }
@@ -83,12 +83,21 @@ class App extends React.Component {
 
     setCat = (cat) =>{
         this.setState({statsType: cat});
-        this.fetchData( cat );
+        this.fetchData(cat);
     }
 
     getCurrentCat(){
         return this.state.statsType;
     }
+
+    activeTabLinkStyle = () =>{
+        let style = {
+            background: 'transparent',
+            borderBottom: '3px solid #e75300',
+            color: '#fff'
+        }
+        return style;
+    };
 
     render(){
         return (
@@ -106,19 +115,19 @@ class App extends React.Component {
                         </div>
                         <div className="side-rail__league-leaders-wrap side-rail__league-leaders-wrap_data_traditional">
                             <ul className="tabs tabs_style_ranking" data-tab="" role="tablist">
-                                <li className="tab-title" role="presentation">
+                                <li className={ this.getCurrentCat() ==='PTS' ? 'tab-title active' : 'tab-title' } role="presentation">
                                     <a role="tab" tabIndex="0" aria-selected="true"
                                        onClick={() =>{
                                            this.setCat('PTS')
                                        }}>Points</a>
                                 </li>
-                                <li className="tab-title" role="tabIndex">
+                                <li className={ this.getCurrentCat() ==='REB' ? 'tab-title active' : 'tab-title' } role="tabIndex">
                                     <a role="tab" tabIndex="-1" aria-selected="false"
                                        aria-controls="panel2-2" onClick={() =>{
                                         this.setCat('REB')
                                     }}>Rebounds</a>
                                 </li>
-                                <li className="tab-title" role="presentation">
+                                <li className={ this.getCurrentCat() ==='AST' ? 'tab-title active' : 'tab-title' } role="presentation">
                                     <a role="tab" tabIndex="-1" aria-selected="false"
                                        aria-controls="panel2-3" onClick={() =>{
                                         this.setCat('AST')
@@ -133,34 +142,6 @@ class App extends React.Component {
                                                                                                      key={i}/>)}
                                     </div>
                                 }
-                            </div>
-                            <div className="side-rail__league-leaders league-leaders tabs-content">
-
-                                <section role="tabpanel" aria-hidden="false"
-                                         className="league-leaders__category-section content active"
-                                         id="panel2-1">
-
-                                    <wnba-league-leaders show="10" footer="true" data-stat="PTS" data-flat="true">
-                                        <wnba-league-leaders-list data-show="{{ show }}" data-stat="{{ stat }}"
-                                                                  data-footer="{{ footer }}" data-players="players"
-                                                                  data-flat="{{ flat }}"></wnba-league-leaders-list>
-                                    </wnba-league-leaders>
-                                </section>
-
-                                <section role="tabpanel" aria-hidden="true"
-                                         className="league-leaders__category-section content"
-                                         id="panel2-2" tabIndex="-1">
-                                    <wnba-league-leaders show="10" footer="true" data-stat="REB"
-                                                         data-flat="true"></wnba-league-leaders>
-                                </section>
-
-                                <section role="tabpanel" aria-hidden="true"
-                                         className="league-leaders__category-section content"
-                                         id="panel2-3" tabIndex="-1">
-                                    <wnba-league-leaders show="10" footer="true" data-stat="AST"
-                                                         data-flat="true"></wnba-league-leaders>
-                                </section>
-
                             </div>
                         </div>
                     </div>
