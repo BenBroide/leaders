@@ -22,7 +22,9 @@ class App extends React.Component {
     }
 
     fetchData = ( cat = 'PTS' ) => {
-        
+        if( this.state[cat].length > 0 ){
+            return;
+        }
         axios.get(`/wp-json/wnba/v1/stats?cat=${cat}`)
             .then( (response) => {
                 console.log(response);
