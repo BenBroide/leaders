@@ -1,5 +1,5 @@
 <?php
-include ('stats.php');
+include( 'stats.php' );
 add_action( 'wp_enqueue_scripts', 'twentyseventeen_parent_theme_enqueue_styles' );
 
 function twentyseventeen_parent_theme_enqueue_styles() {
@@ -29,6 +29,9 @@ function get_stats( $request ) {
 }
 
 function get_data( $cat ) {
+	if ( 'all' == $cat ) {
+		return get_all_data();
+	}
 	if ( 'PTS' == $cat ) {
 		return get_pts_data();
 	}
@@ -40,3 +43,21 @@ function get_data( $cat ) {
 	}
 }
 
+function get_all_data() {
+	$players_post_ids = get_posts( [
+		'post_type'      => 'post',
+		'post_status'    => 'publish',
+		'posts_per_page' => - 1,
+		'fields'         => 'ids'
+	] );
+	$players = [];
+	foreach ( $players_post_ids as $post_id ){
+		$meta_data = get_post_meta( $post_id );
+		foreach ( $meta_data as $field_key => $field_value ){
+			$player_stats = [];
+			$player_stats[ltrim( $field_key, '_')] = $field_value;
+			$players[] = $player_stats;
+		}
+	}
+	return $players;
+}
