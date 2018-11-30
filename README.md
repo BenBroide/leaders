@@ -1,4 +1,4 @@
-# leaders
+# Leaders
 
 The app pulls stats from a rest API endpoint by tab.
 
