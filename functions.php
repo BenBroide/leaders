@@ -52,12 +52,17 @@ function get_all_data() {
 	] );
 	$players = [];
 	foreach ( $players_post_ids as $post_id ){
+		$player_stats = [];
 		$meta_data = get_post_meta( $post_id );
 		foreach ( $meta_data as $field_key => $field_value ){
-			$player_stats = [];
-			$player_stats[ltrim( $field_key, '_')] = $field_value;
+
+			$player_stats[ltrim( $field_key, '_')] = $field_value[0];
+
+		}
+		if( !empty( $player_stats )){
 			$players[] = $player_stats;
 		}
+
 	}
 	return $players;
 }

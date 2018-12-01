@@ -14,7 +14,7 @@ const Player = ({ listID, cat , PLAYER_NAME, TEAM_ABBREVIATION, PLAYER_POSITION,
     };
 
     let statsValue = '';
-    switch (cat ) {
+    switch ( cat ) {
         case 'PTS' :
             statsValue = PTS;
             break;
@@ -26,7 +26,7 @@ const Player = ({ listID, cat , PLAYER_NAME, TEAM_ABBREVIATION, PLAYER_POSITION,
     }
 
     return <div className="player-stat-card player-stats-list__player-stat-card">
-        <a href="https://www.wnba.com/player/liz-cambage/">
+        <a href={`https://www.wnba.com/player/${PLAYER_NAME.toLowerCase().replace(' ', '-')}`}>
             <Style>
                 {`
                                 .player-stat-card__player-info:before {
@@ -63,7 +63,7 @@ const Player = ({ listID, cat , PLAYER_NAME, TEAM_ABBREVIATION, PLAYER_POSITION,
             </Style>
 
 
-            <div className="player-stat-card__stat">{statsValue.toFixed(1)}</div>
+            <div className="player-stat-card__stat">{statsValue}</div>
         </a>
     </div>
 
