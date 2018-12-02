@@ -1,6 +1,9 @@
 <pre>
 <?php
 // add post_exists function
+
+var_dump( get_pts_data() );
+die();
 if ( ! is_admin() ) {
 	require_once( ABSPATH . 'wp-admin/includes/post.php' );
 }
@@ -22,8 +25,8 @@ foreach ( $players['resultSets'][0]->rowSet as $key => $player_stats ) {
 		echo $post_id;
 		echo '<hr>';
 		foreach ( $player_stats as $stat_key => $stat_value ) {
-			update_post_meta( $post_id, '_' . $headers[ $stat_key ], $stat_value );
-			echo $headers[ $stat_key ] . ' - ' . $stat_value;
+			update_post_meta( $post_id, '_' . strtolower( $headers[ $stat_key ] ), $stat_value );
+			echo $headers[ strtolower( $stat_key ) ] . ' - ' . $stat_value;
 			echo '<br>';
 		}
 		// ensure we got the fields

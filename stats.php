@@ -1,4 +1,8 @@
 <?php
+
+function get_stats_headers(){
+	return get_pts_data()->resultSets[0]->headers;
+}
 function get_pts_data() {
 	return json_decode( '{
 		"resource": "wnbaseasonstats",
