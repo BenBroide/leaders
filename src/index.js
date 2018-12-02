@@ -26,8 +26,12 @@ class App extends React.Component {
     fetchData = (cat = 'PTS') =>{
         axios.get(`/wp-json/wnba/v1/stats?cat=all`)
             .then((response) =>{
-                console.log(response);
-                this.setState({stats: response.data, loaded: true});
+                var data = [];
+                response.data.map( playerObject  => {
+                    var objUppercase = Object.keys(playerObject).reduce((n, k) => (n[k.toUpperCase()] = playerObject[k], n), {});
+                    data.push(objUppercase);
+                });
+                this.setState({stats: data, loaded: true});
             })
             .catch((error) =>{
                 console.log(error);
