@@ -26,7 +26,7 @@ class App extends React.Component {
     fetchData = (cat = 'PTS') =>{
         axios.get(`/wp-json/wp/v2/posts`)
             .then((response) =>{
-                
+
                 var data = [];
                 response.data.map( playerObject  => {
                     var objUppercase = Object.keys(playerObject).reduce((n, k) => (n[k.toUpperCase()] = playerObject[k], n), {});
